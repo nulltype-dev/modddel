@@ -1,0 +1,53 @@
+{
+  "name": "@nulltype/modddel",
+  "version": "2.0.0-wp.1",
+  "description": "DDD Model framework",
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "dist/types/index.d.ts",
+  "scripts": {
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "lint": "eslint . --fix && tsc --noEmit",
+    "dev": "rollup -c rollup.config.mjs -w",
+    "prebuild": "npm run lint && npm run test && rm -rf dist",
+    "build": "rollup -c rollup.config.mjs",
+    "prepublishOnly": "npm run lint && rm -rf dist && npm run build"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./test-utils": {
+      "import": "./dist/esm/test-utils.js",
+      "require": "./dist/cjs/test-utils.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://nulltype-dev.github.io/commons-js/features/modddel",
+  "files": [
+    "./dist",
+    "./README.md"
+  ],
+  "devDependencies": {
+    "@nulltype/eslint-config-ts-base": "^2.0.1",
+    "@types/node": "^22.7.4",
+    "@vitest/coverage-v8": "^2.1.1",
+    "eslint": "^9.11.1",
+    "rollup": "^4.23.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "typescript": "~5.5.0",
+    "typescript-eslint": "^8.8.0",
+    "vitest": "^2.1.1"
+  },
+  "dependencies": {
+    "@nulltype/event-emitter": "^1.1.0"
+  }
+}
