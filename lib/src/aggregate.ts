@@ -24,7 +24,8 @@ export function defineAggregateRoot<
     name: () => options.name,
     create(id: string) {
       const state = () => aggregateData(instance).state
-      const stateCopy = (): StateT => JSON.parse(JSON.stringify(state()))
+      // TODO: implement possibility to clone the state
+      const stateCopy = (): StateT => state()
 
       const actions = Object.fromEntries(
         Object.entries(options.actions ?? {}).map(([name, action]) => [

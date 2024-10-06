@@ -139,7 +139,8 @@ export const loadAggregate = <
 
   if (snapshot) {
     data.version = snapshot.version
-    data.state = JSON.parse(JSON.stringify(snapshot.state))
+    // TODO: clone the state
+    data.state = snapshot.state
   }
 
   if (!events.length) {

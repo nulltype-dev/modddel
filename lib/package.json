@@ -1,6 +1,6 @@
 {
   "name": "@nulltype/modddel",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "DDD Model framework",
   "type": "module",
   "main": "dist/cjs/index.js",
@@ -24,7 +24,7 @@
     "./test-utils": {
       "import": "./dist/esm/test-utils.js",
       "require": "./dist/cjs/test-utils.js",
-      "types": "./dist/types/index.d.ts"
+      "types": "./dist/types/test-utils.d.ts"
     }
   },
   "keywords": [],
