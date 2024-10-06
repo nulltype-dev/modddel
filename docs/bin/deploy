@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -e
+export BASE_URL=/modddel/
+npm run docs:build
+cd .vitepress/dist
+git init
+git add -A
+git commit -m 'deploy'
+git push -f git@github.com:nulltype-dev/modddel.git master:gh-pages
+cd -

@@ -31,7 +31,7 @@ const aggregateDefinitions = new Map<
 
 const aggregatesData = new WeakMap<AggregateInstance, AggregateData<any, any>>()
 
-const getAggregateDefinition = <DefinitionT>(name: string) => {
+export const getAggregateDefinition = <DefinitionT>(name: string) => {
   const config = aggregateDefinitions.get(name)
   if (!config) {
     throw new Error(`Aggregate "${name}" not defined`)

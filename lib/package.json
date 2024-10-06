@@ -1,6 +1,6 @@
 {
   "name": "@nulltype/modddel",
-  "version": "2.0.0-wp.1",
+  "version": "2.0.1",
   "description": "DDD Model framework",
   "type": "module",
   "main": "dist/cjs/index.js",
@@ -30,7 +30,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage": "https://nulltype-dev.github.io/commons-js/features/modddel",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nulltype-dev/modddel"
+  },
+  "homepage": "https://nulltype-dev.github.io/modddel",
   "files": [
     "./dist",
     "./README.md"
@@ -40,6 +44,7 @@
     "@types/node": "^22.7.4",
     "@vitest/coverage-v8": "^2.1.1",
     "eslint": "^9.11.1",
+    "prettier": "^3.3.3",
     "rollup": "^4.23.0",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-esbuild": "^6.1.1",
@@ -48,6 +53,7 @@
     "vitest": "^2.1.1"
   },
   "dependencies": {
-    "@nulltype/event-emitter": "^1.1.0"
+    "@nulltype/event-emitter": "^1.1.0",
+    "@nulltype/object-helper": "^1.0.1"
   }
 }

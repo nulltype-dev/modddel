@@ -7,3 +7,9 @@ export class InstanceDoesNotExistError extends ModddelError {
     )
   }
 }
+
+export class ConcurrencyError extends ModddelError {
+  constructor() {
+    super('Concurrency error')
+  }
+}

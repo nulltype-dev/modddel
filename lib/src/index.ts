@@ -1,3 +1,5 @@
 export type * as Modddel from './types.js'
 export * from './errors.js'
 export * from './aggregate.js'
+export { Mutex } from './Mutex.js'
+export { Repository } from './Repository.js'

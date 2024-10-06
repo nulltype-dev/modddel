@@ -125,6 +125,42 @@ export interface ISnapshot<StateT> {
   state: StateT
 }
 
+export interface IStreamEvent {
+  name: string
+  payload: unknown
+  occuredAt: number
+  aggregateId: string
+  aggregateType: string
+  version: number
+}
+
 export type MethodsRecord = {
   [k in string]: AnyArgs
+}
+
+export type MaybePromise<ResolveT> = Promise<ResolveT> | ResolveT
+
+export interface IEventStore {
+  getAggregateVersion<StateT, ActionsT extends MethodsRecord, EventsT>(
+    aggregateDefinition: AggregateDefinition<StateT, ActionsT, EventsT>,
+    id: string,
+  ): MaybePromise<number>
+  saveEvents(event: IStreamEvent[]): MaybePromise<void>
+  loadHistory<StateT, ActionsT extends MethodsRecord, EventsT>(
+    aggregateDefinition: AggregateDefinition<StateT, ActionsT, EventsT>,
+    id: string,
+    sinceVersion: number,
+  ): MaybePromise<IStreamEvent[]>
+}
+
+export interface ISnapshotStore {
+  loadSnapshot<StateT, ActionsT extends MethodsRecord, EventsT>(
+    aggregateDefinition: AggregateDefinition<StateT, ActionsT, EventsT>,
+    id: string,
+  ): MaybePromise<ISnapshot<StateT> | null>
+  saveSnapshot<StateT, ActionsT extends MethodsRecord, EventsT>(
+    aggregateDefinition: AggregateDefinition<StateT, ActionsT, EventsT>,
+    id: string,
+    snapshot: ISnapshot<unknown>,
+  ): MaybePromise<void>
 }

@@ -41,7 +41,7 @@ const loadAggregateWithEventHistory = <
         payload,
         version: (snapshot?.version ?? 0) + index + 1,
         occuredAt: firstEventDate + 1000 * index,
-      } satisfies IAggregateEvent<EventsT, keyof EventsT>),
+      }) satisfies IAggregateEvent<EventsT, keyof EventsT>,
   )
 
   return loadAggregate<AggregateDefinition<StateT, ActionsT, EventsT>>(
@@ -60,6 +60,13 @@ type Assertion = Promise<{
   error?: Error | null
 }>
 
+const normalizeError = (error: unknown) =>
+  error instanceof Error
+    ? error
+    : new Error(undefined, {
+        cause: error,
+      })
+
 const executionApi = <StateT, ActionsT extends MethodsRecord, EventsT>(
   instance: AggregateInstance<StateT, ActionsT, EventsT>,
   execution: Promise<void>,
@@ -69,16 +76,13 @@ const executionApi = <StateT, ActionsT extends MethodsRecord, EventsT>(
       expected: string | RegExp | ((error: Error) => AssertResult),
     ): Assertion {
       let catchedError: Error | null = null
+      let errorMessage = ''
 
       try {
         await execution
       } catch (error) {
-        catchedError =
-          error instanceof Error
-            ? error
-            : new Error(undefined, {
-                cause: error,
-              })
+        catchedError = normalizeError(error)
+        errorMessage = catchedError.message || String(catchedError?.cause)
       }
 
       if (typeof expected === 'function') {
@@ -89,18 +93,14 @@ const executionApi = <StateT, ActionsT extends MethodsRecord, EventsT>(
         }
       } else if (expected instanceof RegExp) {
         return {
-          result: Boolean(
-            catchedError &&
-              expected.test(catchedError.message ?? String(catchedError.cause)),
-          ),
+          result: Boolean(catchedError && expected.test(errorMessage)),
           message: `Did not throw error matching RegExp ${expected}.`,
           error: catchedError,
         }
       }
 
       return {
-        result:
-          expected === (catchedError?.message ?? String(catchedError?.cause)),
+        result: expected === errorMessage,
         message: `Did not throw error "${expected}".`,
         error: catchedError,
       }
@@ -116,12 +116,7 @@ const executionApi = <StateT, ActionsT extends MethodsRecord, EventsT>(
         return {
           result: false,
           message: 'Error occured during execution.',
-          error:
-            error instanceof Error
-              ? error
-              : new Error(undefined, {
-                  cause: error,
-                }),
+          error: normalizeError(error),
         }
       }
 
@@ -205,7 +200,7 @@ const GivenAggregate = <StateT, ActionsT extends MethodsRecord, EventsT>(
     withNewInstance(id: string) {
       return instanceApi(aggregateDefinition.create(id))
     },
-    withInstanceHistory(
+    withHistory(
       id: string,
       events: HistoryEvent<EventsT>[],
       snapshot?: ISnapshot<StateT>,
