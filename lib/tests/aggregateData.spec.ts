@@ -471,6 +471,7 @@ describe('Aggregate data internal functions', () => {
             payload: {
               x: 7,
             },
+            occuredAt: Date.now(),
           })
         }).toThrow(/does not exist/)
       })
@@ -509,6 +510,7 @@ describe('Aggregate data internal functions', () => {
           payload: {
             x: 7,
           },
+          occuredAt: now,
         })
         vi.useRealTimers()
         const events = popRecordedEvents(instance)
@@ -531,6 +533,7 @@ describe('Aggregate data internal functions', () => {
           payload: {
             x: 7,
           },
+          occuredAt: Date.now(),
         })
 
         const events = popRecordedEvents(instance)

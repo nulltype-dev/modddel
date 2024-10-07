@@ -118,6 +118,7 @@ export type AggregateEventsByDefinition<DefinitionT> = AggregateEvent<
 export interface IEvent<PayloadT = unknown> {
   name: string
   payload: PayloadT
+  occuredAt: number
 }
 
 export interface ISnapshot<StateT> {

@@ -189,6 +189,7 @@ export const loadAggregate = <
       {
         name: String(event.name),
         payload: event.payload,
+        occuredAt: event.occuredAt,
       },
     )
 

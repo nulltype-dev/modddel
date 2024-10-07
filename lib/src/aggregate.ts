@@ -39,6 +39,7 @@ export function defineAggregateRoot<
               const event: IEvent<EventsT[NameT]> = {
                 name: String(name),
                 payload,
+                occuredAt: Date.now(),
               }
 
               if (!options.events?.[name]) {
