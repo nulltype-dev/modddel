@@ -1,4 +1,3 @@
-import { has } from '@nulltype/object-helper'
 import { EventEmitter } from '@nulltype/event-emitter'
 import type {
   AggregateDefinition,
@@ -38,8 +37,10 @@ const aggregateEventToStreamEvent = <EventsT>(
   version: event.version,
 })
 
-export const isSnapshotStore = (store: unknown): store is ISnapshotStore =>
-  has(store, 'loadSnapshot') && has(store, 'saveSnapshot')
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const isSnapshotStore = (store: any): store is ISnapshotStore =>
+  typeof store.loadSnapshot === 'function' &&
+  typeof store.saveSnapshot === 'function'
 
 export class Repository {
   #mutex = new Mutex()
